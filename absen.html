@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Form Absensi Unik</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --primary-orange: #FF8C00;
+ --light-orange: #FFDAB9;
+ --text-dark: #333;
+ --text-light: #666;
+ --bg-light: #f9f9f9;
+ --border-color: #ddd;
+ 
+ }
+
+
+ body {
+ font-family: 'Montserrat', sans-serif;
+ background-color: var(--light-orange);
+ margin: 0;
+ padding: 40px;
+ color: var(--text-dark);
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 30px;
+ min-height: 100vh;
+ }
+
+
+ .card {
+ background-color: #fff;
+ padding: 30px;
+ border-radius: 10px;
+ box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+ width: 100%;
+ max-width: 450px;
+ transition: transform 0.3s ease;
+ }
+
+
+ .card:hover {
+ transform: translateY(-5px);
+ }
+
+
+ .main-form-card {
+ max-width: 500px;
+ }
+
+
+ h2 {
+ text-align: center;
+ color: var(--primary-orange);
+ margin-bottom: 25px;
+ font-weight: 600;
+ }
+
+
+ .form-group {
+ margin-bottom: 20px;
+ }
+
+
+ label {
+ display: block;
+ margin-bottom: 8px;
+ color: var(--text-light);
+ font-weight: 600;
+ }
+
+
+ input[type="text"],
+ select {
+ width: 100%;
+ padding: 12px;
+ border: 1px solid var(--border-color);
+ border-radius: 6px;
+ box-sizing: border-box;
+ font-size: 16px;
+ transition: border-color 0.3s, box-shadow 0.3s;
+ }
+
+
+ input[type="text"]:focus,
+ select:focus {
+ border-color: var(--primary-orange);
+ box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+ outline: none;
+ }
+
+
+ .radio-group {
+ display: flex;
+ gap: 20px;
+ align-items: center;
+ }
+
+
+ .radio-group label {
+ font-weight: 400;
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ cursor: pointer;
+ }
+
+
+ .radio-group input[type="radio"] {
+ accent-color: var(--primary-orange);
+ }
+
+
+ .hidden {
+ display: none;
+ }
+
+
+ button {
+ width: 100%;
+ padding: 12px;
+ background-color: var(--primary-orange);
+ color: #fff;
+ border: none;
+ border-radius: 6px;
+ font-size: 18px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: background-color 0.3s, transform 0.2s;
+ }
+
+
+ button:hover {
+ background-color: #FF7F00;
+ transform: translateY(-2px);
+ }
+
+
+ .summary-container {
+ width: 100%;
+ max-width: 1000px;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 20px;
+ justify-content: center;
+ }
+
+
+ .summary-card {
+ flex: 1 1 300px;
+ }
+
+
+ .summary-list {
+ list-style-type: none;
+ padding: 0;
+ margin: 0;
+ }
+
+
+ .summary-list li {
+ background-color: var(--bg-light);
+ border-left: 4px solid var(--primary-orange);
+ border-radius: 4px;
+ padding: 10px 15px;
+ margin-bottom: 8px;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ }
+
+
+ .summary-main-info {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ width: 100%;
+ margin-bottom: 5px;
+ }
+
+
+ .summary-date-info {
+ font-size: 0.9em;
+ color: var(--text-light);
+ }
+
+
+ .status-hadir { color: #28a745; font-weight: 600; }
+ .status-izin { color: #ffc107; font-weight: 600; }
+ .status-alpha { color: #dc3545; font-weight: 600; }
+
+
+ .date-info {
+ text-align: center;
+ margin-bottom: 25px;
+ color: var(--text-light);
+ font-weight: 600;
+ }
+ </style>
+</head>
+<body>
+
+
+ <div class="card main-form-card">
+ <h2>Absensi Siswa</h2>
+ <div class="date-info" id="date-info"></div>
+ <form id="attendanceForm">
+ <div class="form-group">
+ <label for="nama_siswa">Nama Siswa</label>
+ <input type="text" id="nama_siswa" name="nama_siswa" required>
+ </div>
+
+
+ <div class="form-group">
+ <label for="kelas">Kelas</label>
+ <select id="kelas" name="kelas" required>
+ <option value="">-- Pilih Kelas --</option>
+ <option value="X">X</option>
+ <option value="XI">XI</option>
+ <option value="XII">XII</option>
+ </select>
+ </div>
+
+
+ <div class="form-group">
+ <label for="jurusan">Jurusan</label>
+ <select id="jurusan" name="jurusan" required>
+ <option value="">-- Pilih Jurusan --</option>
+ <option value="TKJT">TKJT</option>
+ <option value="TKP">TKP</option>
+ <option value="TO">TO</option>
+ <option value="AKL">AKL</option>
+ <option value="MPLB">MPLB</option>
+ </select>
+ </div>
+
+
+ <div class="form-group">
+ <label>Status Kehadiran</label>
+ <div class="radio-group">
+ <label>
+ <input type="radio" name="status" value="Hadir" required> Hadir
+ </label>
+ <label>
+ <input type="radio" name="status" value="Izin"> Izin
+ </label>
+ <label>
+ <input type="radio" name="status" value="Alpha"> Alpha
+ </label>
+ </div>
+ </div>
+
+
+ <div class="form-group hidden" id="keterangan_izin">
+ <label for="keterangan">Keterangan Izin</label>
+ <input type="text" id="keterangan" name="keterangan">
+ </div>
+
+
+ <button type="submit">Submit Absensi</button>
+ </form>
+ </div>
+
+
+ <div class="summary-container" id="summary-container">
+ </div>
+
+
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+ const statusRadios = document.querySelectorAll('input[name="status"]');
+ const keteranganIzinDiv = document.getElementById('keterangan_izin');
+ const attendanceForm = document.getElementById('attendanceForm');
+ const summaryContainer = document.getElementById('summary-container');
+ const dateInfoDiv = document.getElementById('date-info');
+
+
+ let attendanceData = [];
+ const storageKey = 'absensiSMKPGRI';
+
+
+ const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+ const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+
+ // Fungsi untuk mendapatkan tanggal saat ini dalam format YYYY-MM-DD
+ function getCurrentDateKey() {
+ const now = new Date();
+ return `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+ }
+
+
+ // Fungsi untuk memuat data dari localStorage
+ function loadData() {
+ const storedData = localStorage.getItem(storageKey);
+ const storedDate = localStorage.getItem('absensiDate');
+ const currentDate = getCurrentDateKey();
+
+
+ if (storedData && storedDate === currentDate) {
+ attendanceData = JSON.parse(storedData);
+ } else {
+ // Reset data jika tanggal sudah berganti
+ attendanceData = [];
+ localStorage.removeItem(storageKey);
+ localStorage.setItem('absensiDate', currentDate);
+ }
+ renderSummary();
+ }
+
+
+ // Fungsi untuk menyimpan data ke localStorage
+ function saveData() {
+ localStorage.setItem(storageKey, JSON.stringify(attendanceData));
+ }
+
+
+ function displayCurrentDate() {
+ const now = new Date();
+ const dayName = days[now.getDay()];
+ const date = now.getDate();
+ const monthName = months[now.getMonth()];
+ const year = now.getFullYear();
+ const hours = now.getHours().toString().padStart(2, '0');
+ const minutes = now.getMinutes().toString().padStart(2, '0');
+
+
+ if (now.getDay() === 0) {
+ dateInfoDiv.textContent = 'Hari ini hari Minggu. Form absensi tidak aktif.';
+ attendanceForm.style.display = 'none';
+ } else {
+ dateInfoDiv.textContent = `${dayName}, ${date} ${monthName} ${year} | Pukul ${hours}:${minutes}`;
+ }
+ }
+
+
+ displayCurrentDate();
+ loadData();
+ 
+ statusRadios.forEach(radio => {
+ radio.addEventListener('change', function() {
+ if (this.value === 'Izin') {
+ keteranganIzinDiv.classList.remove('hidden');
+ document.getElementById('keterangan').setAttribute('required', 'required');
+ } else {
+ keteranganIzinDiv.classList.add('hidden');
+ document.getElementById('keterangan').removeAttribute('required');
+ }
+ });
+ });
+
+
+ attendanceForm.addEventListener('submit', function(event) {
+ event.preventDefault();
+
+
+ const now = new Date();
+ const dayName = days[now.getDay()];
+ const date = now.getDate();
+ const monthName = months[now.getMonth()];
+ const hours = now.getHours().toString().padStart(2, '0');
+ const minutes = now.getMinutes().toString().padStart(2, '0');
+ const timestamp = `${dayName}, ${date} ${monthName} Pukul ${hours}:${minutes}`;
+
+
+ const newEntry = {
+ nama: document.getElementById('nama_siswa').value,
+ kelas: document.getElementById('kelas').value,
+ jurusan: document.getElementById('jurusan').value,
+ status: document.querySelector('input[name="status"]:checked').value,
+ keterangan: document.getElementById('keterangan').value,
+ timestamp: timestamp
+ };
+
+
+ attendanceData.push(newEntry);
+ saveData();
+ renderSummary();
+ attendanceForm.reset();
+ keteranganIzinDiv.classList.add('hidden');
+ });
+
+
+ function renderSummary() {
+ summaryContainer.innerHTML = '';
+
+
+ const groupedData = attendanceData.reduce((acc, current) => {
+ const key = `${current.kelas} - ${current.jurusan}`;
+ if (!acc[key]) {
+ acc[key] = [];
+ }
+ acc[key].push(current);
+ return acc;
+ }, {});
+
+
+ if (Object.keys(groupedData).length === 0) {
+ summaryContainer.innerHTML = '<div class="card summary-card" style="text-align: center; color: var(--text-light);">Belum ada data absensi hari ini.</div>';
+ return;
+ }
+
+
+ for (const group in groupedData) {
+ const cardDiv = document.createElement('div');
+ cardDiv.className = 'card summary-card';
+
+
+ const groupTitle = document.createElement('h4');
+ groupTitle.textContent = `Rekapan ${group}`;
+ cardDiv.appendChild(groupTitle);
+
+
+ const summaryList = document.createElement('ul');
+ summaryList.className = 'summary-list';
+
+
+ groupedData[group].forEach(entry => {
+ const listItem = document.createElement('li');
+ const statusClass = `status-${entry.status.toLowerCase()}`;
+ 
+ const statusText = entry.status;
+ 
+ listItem.innerHTML = `
+ <div class="summary-main-info">
+ <span><strong>${entry.nama}</strong></span>
+ <span class="${statusClass}">${statusText}</span>
+ </div>
+ <span class="summary-date-info">${entry.timestamp}</span>
+ `;
+ 
+ if (entry.keterangan) {
+ const ketSpan = document.createElement('span');
+ ketSpan.textContent = `Keterangan: ${entry.keterangan}`;
+ ketSpan.style.fontSize = '0.9em';
+ ketSpan.style.color = 'var(--text-light)';
+ listItem.appendChild(ketSpan);
+ }
+
+
+ summaryList.appendChild(listItem);
+ });
+
+
+ cardDiv.appendChild(summaryList);
+ summaryContainer.appendChild(cardDiv);
+ }
+ }
+ });
+ </script>
+</body>
+</html>
+
